@@ -88,9 +88,9 @@ const uint16_t PROGMEM my_re[] = {KC_R, KC_E, COMBO_END};
 combo_t key_combos[] = {
     COMBO(my_jk, KC_BTN1),
     COMBO(my_kl, KC_BTN2),
-    COMBO(my_ui, KC_BTN4),
-    COMBO(my_io, KC_BTN5),
-    COMBO(my_df, KC_ENTER),
-    COMBO(my_sd, KC_BACKSPACE)
+    COMBO(my_mcom, KC_BTN4),
+    COMBO(my_comdot, KC_BTN5),
+    COMBO(my_ui, KC_ENTER),
+    COMBO(my_re, KC_BACKSPACE)
 };
 #endif
