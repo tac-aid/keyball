@@ -96,7 +96,7 @@ const uint16_t PROGMEM my_jk[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM my_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM my_hj[] = {KC_H, KC_J, COMBO_END};
 const uint16_t PROGMEM my_lsc[] = {KC_L, KC_SEMICOLON, COMBO_END};
-const uint16_t PROGMEM my_io[] = {KC_I, KC_O, COMBO_END}
+const uint16_t PROGMEM my_io[] = {KC_I, KC_O, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(my_jk, KC_BTN1),
