@@ -126,13 +126,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         if (!ctrl_tab_active) {
           ctrl_tab_active = true;
-          register_code(KC_LCTRL);
+          register_code(KC_LCTL);
           tap_code(KC_TAB);
         } else {
           tap_code(KC_TAB);
         }
       } else {
-        unregister_code(KC_LCTRL);
+        unregister_code(KC_LCTL);
         ctrl_tab_active = false;
       }
       return false;
