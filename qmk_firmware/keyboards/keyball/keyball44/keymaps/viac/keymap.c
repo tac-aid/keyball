@@ -100,7 +100,7 @@ combo_t key_combos[] = {
 
 enum custom_keycodes {
   USER_0 = SAFE_RANGE, 
-  USER_1 = SAFE_RANGE, 
+  USER_1, 
 };
 
 static bool alt_tab_active = false;
