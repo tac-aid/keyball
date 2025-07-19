@@ -97,3 +97,46 @@ combo_t key_combos[] = {
     COMBO(btn5, KC_BTN5)
 };
 #endif
+
+enum custom_keycodes {
+  USER_0 = SAFE_RANGE, 
+  USER_1 = SAFE_RANGE, 
+};
+
+static bool alt_tab_active = false;
+static bool ctrl_tab_active = false;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case USER_0:
+      if (record->event.pressed) {
+        if (!alt_tab_active) {
+          alt_tab_active = true;
+          register_code(KC_LALT);
+          tap_code(KC_TAB);
+        } else {
+          tap_code(KC_TAB);
+        }
+      } else {
+        unregister_code(KC_LALT);
+        alt_tab_active = false;
+      }
+      return false;
+    case USER_1:
+      if (record->event.pressed) {
+        if (!ctrl_tab_active) {
+          ctrl_tab_active = true;
+          register_code(KC_LCTRL);
+          tap_code(KC_TAB);
+        } else {
+          tap_code(KC_TAB);
+        }
+      } else {
+        unregister_code(KC_LCTRL);
+        ctrl_tab_active = false;
+      }
+      return false;
+
+  }
+  return true;
+}
