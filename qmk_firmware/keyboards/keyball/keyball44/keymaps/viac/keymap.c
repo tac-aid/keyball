@@ -143,7 +143,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       alt_tab_active = false;
     }
     if (ctrl_tab_active) {
-      unregister_code(KC_CTL);
+      unregister_code(KC_LCTL);
       ctrl_tab_active = false;
     }
   }
