@@ -110,6 +110,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case USER_0:
       if (record->event.pressed) {
+        ctrl_tab_active = false;
         if (!alt_tab_active) {
           alt_tab_active = true;
           register_code(KC_LALT);
@@ -117,13 +118,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
           tap_code(KC_TAB);
         }
-      } else {
-        unregister_code(KC_LALT);
-        alt_tab_active = false;
       }
       return false;
     case USER_1:
       if (record->event.pressed) {
+        alt_tab_active = false;
         if (!ctrl_tab_active) {
           ctrl_tab_active = true;
           register_code(KC_LCTL);
@@ -131,12 +130,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
           tap_code(KC_TAB);
         }
-      } else {
-        unregister_code(KC_LCTL);
-        ctrl_tab_active = false;
       }
       return false;
-
   }
   return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  if (get_highest_layer(state) != 4) {
+    if (alt_tab_active) {
+      unregister_code(KC_LALT);
+      alt_tab_active = false;
+    }
+    if (ctrl_tab_active) {
+      unregister_code(KC_CTL);
+      ctrl_tab_active = false;
+    }
+  }
+  return state;
 }
