@@ -85,12 +85,13 @@ const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
 const uint16_t PROGMEM layer3[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM hor_layer3[] = {KC_D, KC_J, COMBO_END};
 
 enum custom_keycodes {
   USER_0 = SAFE_RANGE, 
   USER_1,
-  USER_2,
-  LAYER3
+  LAYER3,
+  HOR_LAYER3
 };
 
 combo_t key_combos[] = {
@@ -99,7 +100,8 @@ combo_t key_combos[] = {
   COMBO(btn2, KC_BTN2),
   COMBO(btn4, KC_BTN4),
   COMBO(btn5, KC_BTN5),
-  COMBO(layer3, LAYER3)
+  COMBO(layer3, LAYER3),
+  COMBO(hor_layer3, HOR_LAYER3)
 };
 #endif
 
@@ -132,15 +134,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-    case USER_2:
+    case HOR_LAYER3:
       if (record->event.pressed) {
         process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = true}});
         wait_ms(100);
         process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = false}});
+        layer_on(3);
       } else {
         process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = true}});
         wait_ms(100);
         process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = false}});
+        layer_off(3);
       }
       return false;
     case LAYER3:
