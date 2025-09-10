@@ -144,17 +144,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VSCROLL:
       if (record->event.pressed) {
         tap_custom_keycode(SSNP_VRT);
-        register_code(SCRL_MO);
+        tap_custom_keycode(SCRL_TO);
       } else {
-        unregister_code(SCRL_MO);
+        tap_custom_keycode(SCRL_TO);
       }
       return false;
     case HSCROLL:
       if (record->event.pressed) {
         tap_custom_keycode(SSNP_HOR);
-        register_code(SCRL_MO);
+        tap_custom_keycode(SCRL_TO);
       } else {
-        unregister_code(SCRL_MO);
+        tap_custom_keycode(SCRL_TO);
         tap_custom_keycode(SSNP_VRT);
       }
       return false;
