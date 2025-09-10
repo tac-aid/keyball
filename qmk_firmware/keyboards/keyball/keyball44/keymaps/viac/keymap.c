@@ -87,23 +87,23 @@ const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
 const uint16_t PROGMEM vscroll[] = {KC_T, KC_S, COMBO_END};
 const uint16_t PROGMEM hscroll[] = {KC_D, KC_J, COMBO_END};
 
-combo_t key_combos[] = {
-    COMBO(btn1, KC_BTN1),
-    COMBO(btn1_2, KC_BTN1),
-    COMBO(btn2, KC_BTN2),
-    COMBO(btn4, KC_BTN4),
-    COMBO(btn5, KC_BTN5),
-    COMBO(vscroll, VSCROLL),
-    COMBO(hscroll, HSCROLL)
-};
-#endif
-
 enum custom_keycodes {
   USER_0 = SAFE_RANGE, 
   USER_1,
-  VSCROLL
-  HSCROLL,
+  VSCROLL,
+  HSCROLL
 };
+
+combo_t key_combos[] = {
+  COMBO(btn1, KC_BTN1),
+  COMBO(btn1_2, KC_BTN1),
+  COMBO(btn2, KC_BTN2),
+  COMBO(btn4, KC_BTN4),
+  COMBO(btn5, KC_BTN5),
+  COMBO(vscroll, VSCROLL),
+  COMBO(hscroll, HSCROLL)
+};
+#endif
 
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
