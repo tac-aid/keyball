@@ -111,6 +111,7 @@ static bool ctrl_tab_active = false;
 void tap_custom_keycode(uint16_t keycode) {
   // 押下イベントをシミュレート
   process_record_user(keycode, &(keyrecord_t){.event = {.pressed = true}});
+  wait_ms(30);
   // 解放イベントをシミュレート
   process_record_user(keycode, &(keyrecord_t){.event = {.pressed = false}});
 }
