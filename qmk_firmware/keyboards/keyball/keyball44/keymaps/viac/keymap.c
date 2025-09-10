@@ -107,7 +107,13 @@ combo_t key_combos[] = {
 
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
-static bool scroll_active = false;
+
+void tap_custom_keycode(uint16_t keycode) {
+  // 押下イベントをシミュレート
+  process_record_user(keycode, &(keyrecord_t){.event = {.pressed = true}});
+  // 解放イベントをシミュレート
+  process_record_user(keycode, &(keyrecord_t){.event = {.pressed = false}});
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -137,7 +143,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case VSCROLL:
       if (record->event.pressed) {
-        tap_code(SSNP_VRT);
+        tap_custom_keycode(SSNP_VRT);
         register_code(SCRL_MO);
       } else {
         unregister_code(SCRL_MO);
@@ -145,11 +151,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case HSCROLL:
       if (record->event.pressed) {
-        tap_code(SSNP_HOR);
+        tap_custom_keycode(SSNP_HOR);
         register_code(SCRL_MO);
       } else {
         unregister_code(SCRL_MO);
-        tap_code(SSNP_VRT);
+        tap_custom_keycode(SSNP_VRT);
       }
       return false;
   }
