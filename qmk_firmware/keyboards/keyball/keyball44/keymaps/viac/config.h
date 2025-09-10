@@ -40,3 +40,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_DEFAULT_LAYER 5
 #define COMBO_TERM 40
 #define DYNAMIC_KEYMAP_LAYER_COUNT 6
+#define KEYBALL_CPI_DEFAULT 700
