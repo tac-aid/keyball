@@ -136,6 +136,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case USER_2:
+      ;
       uint8_t scroll_div = keyball_get_scroll_div();
       if (record->event.pressed) {
         keyball_set_scroll_div(7);
