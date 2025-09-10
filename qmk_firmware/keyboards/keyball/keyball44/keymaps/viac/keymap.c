@@ -84,14 +84,13 @@ const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
-const uint16_t PROGMEM vscroll[] = {KC_T, KC_S, COMBO_END};
-const uint16_t PROGMEM hscroll[] = {KC_D, KC_J, COMBO_END};
+const uint16_t PROGMEM layer3[] = {KC_T, KC_S, COMBO_END};
 
 enum custom_keycodes {
   USER_0 = SAFE_RANGE, 
   USER_1,
-  VSCROLL,
-  HSCROLL
+  USER_2,
+  LAYER3
 };
 
 combo_t key_combos[] = {
@@ -100,21 +99,12 @@ combo_t key_combos[] = {
   COMBO(btn2, KC_BTN2),
   COMBO(btn4, KC_BTN4),
   COMBO(btn5, KC_BTN5),
-  COMBO(vscroll, VSCROLL),
-  COMBO(hscroll, HSCROLL)
+  COMBO(layer3, LAYER3)
 };
 #endif
 
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
-
-void tap_custom_keycode(uint16_t keycode) {
-  // 押下イベントをシミュレート
-  process_record_user(keycode, &(keyrecord_t){.event = {.pressed = true}});
-  wait_ms(30);
-  // 解放イベントをシミュレート
-  process_record_user(keycode, &(keyrecord_t){.event = {.pressed = false}});
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -142,21 +132,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-    case VSCROLL:
+    case USER_2:
       if (record->event.pressed) {
-        tap_custom_keycode(SSNP_VRT);
-        tap_custom_keycode(SCRL_TO);
-      } else {
-        tap_custom_keycode(SCRL_TO);
+          process_record_user(SSNAP_HOR, &(keyrecord_t){.event = {.pressed = true}});
+          process_record_user(SSNAP_HOR, &(keyrecord_t){.event = {.pressed = false}});
+        } else {
+          process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = true}});
+          process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = false}});
+        }
       }
       return false;
-    case HSCROLL:
+    case LAYER3:
       if (record->event.pressed) {
-        tap_custom_keycode(SSNP_HOR);
-        tap_custom_keycode(SCRL_TO);
+        layer_on(3);
       } else {
-        tap_custom_keycode(SCRL_TO);
-        tap_custom_keycode(SSNP_VRT);
+        layer_off(3);
       }
       return false;
   }
