@@ -135,9 +135,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case USER_2:
       if (record->event.pressed) {
         process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = true}});
+        wait_ms(50);
         process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = false}});
       } else {
         process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = true}});
+        wait_ms(50);
         process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = false}});
       }
       return false;
