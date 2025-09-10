@@ -136,21 +136,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case HOR_LAYER3:
       if (record->event.pressed) {
-        process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = true}});
-        wait_ms(100);
-        process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = false}});
         layer_on(3);
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HORIZONTAL);
       } else {
-        process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = true}});
-        wait_ms(100);
-        process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = false}});
         layer_off(3);
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
       }
       return false;
     case LAYER3:
       if (record->event.pressed) {
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
         layer_on(3);
       } else {
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
         layer_off(3);
       }
       return false;
