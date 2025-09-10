@@ -84,7 +84,8 @@ const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
-const uint16_t PROGMEM scrol[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM vscroll[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM hscroll[] = {KC_D, KC_J, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(btn1, KC_BTN1),
@@ -92,17 +93,21 @@ combo_t key_combos[] = {
     COMBO(btn2, KC_BTN2),
     COMBO(btn4, KC_BTN4),
     COMBO(btn5, KC_BTN5),
-    COMBO(scrol, SCRL_MO)
+    COMBO(vscroll, VSCROLL),
+    COMBO(hscroll, HSCROLL)
 };
 #endif
 
 enum custom_keycodes {
   USER_0 = SAFE_RANGE, 
-  USER_1, 
+  USER_1,
+  VSCROLL
+  HSCROLL,
 };
 
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
+static bool scroll_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -128,6 +133,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
           tap_code(KC_TAB);
         }
+      }
+      return false;
+    case VSCROLL:
+      if (record->event.pressed) {
+        tap_code(SSNP_VRT);
+        register_code(SCRL_MO);
+      } else {
+        unregister_code(SCRL_MO);
+      }
+      return false;
+    case HSCROLL:
+      if (record->event.pressed) {
+        tap_code(SSNP_HOR);
+        register_code(SCRL_MO);
+      } else {
+        unregister_code(SCRL_MO);
+        tap_code(SSNP_VRT);
       }
       return false;
   }
