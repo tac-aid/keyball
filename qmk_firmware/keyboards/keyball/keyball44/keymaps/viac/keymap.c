@@ -134,12 +134,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case USER_2:
       if (record->event.pressed) {
-          process_record_user(SSNAP_HOR, &(keyrecord_t){.event = {.pressed = true}});
-          process_record_user(SSNAP_HOR, &(keyrecord_t){.event = {.pressed = false}});
-        } else {
-          process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = true}});
-          process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = false}});
-        }
+        process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = true}});
+        process_record_user(SSNP_HOR, &(keyrecord_t){.event = {.pressed = false}});
+      } else {
+        process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = true}});
+        process_record_user(SSNP_VRT, &(keyrecord_t){.event = {.pressed = false}});
       }
       return false;
     case LAYER3:
