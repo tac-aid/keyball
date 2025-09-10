@@ -84,14 +84,15 @@ const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
-const uint16_t PROGMEM layer3[] = {KC_T, KC_S, COMBO_END};
-const uint16_t PROGMEM hor_layer3[] = {KC_D, KC_J, COMBO_END};
+const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM h_scroll[] = {KC_D, KC_J, COMBO_END};
 
 enum custom_keycodes {
   USER_0 = SAFE_RANGE, 
   USER_1,
-  LAYER3,
-  HOR_LAYER3
+  USER_2,
+  SCROLL,
+  H_SCROLL
 };
 
 combo_t key_combos[] = {
@@ -100,8 +101,8 @@ combo_t key_combos[] = {
   COMBO(btn2, KC_BTN2),
   COMBO(btn4, KC_BTN4),
   COMBO(btn5, KC_BTN5),
-  COMBO(layer3, LAYER3),
-  COMBO(hor_layer3, HOR_LAYER3)
+  COMBO(scroll, SCROLL),
+  COMBO(h_scroll, H_SCROLL)
 };
 #endif
 
@@ -134,22 +135,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-    case HOR_LAYER3:
+    case USER_2:
+      uint8_t scroll_div = keyball_get_scroll_div();
+      if (record->event.pressed) {
+        keyball_set_scroll_div(7);
+      } else {
+        keyball_set_scroll_div(scroll_div);
+      }
+      return false;
+    case SCROLL:
+      if (record->event.pressed) {
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+        layer_on(3);
+      } else {
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+        layer_off(3);
+      }
+      return false;
+    case H_SCROLL:
       if (record->event.pressed) {
         layer_on(3);
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HORIZONTAL);
       } else {
         layer_off(3);
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
-      }
-      return false;
-    case LAYER3:
-      if (record->event.pressed) {
-        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
-        layer_on(3);
-      } else {
-        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
-        layer_off(3);
       }
       return false;
   }
