@@ -129,7 +129,7 @@ void td_ime_reset(tap_dance_state_t *state, void *user_data) {
 }
 
 // タップ/ホールドが確定した時の処理
-void td_sft_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_sft_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         if (state->pressed) {
             layer_on(1);
@@ -143,7 +143,7 @@ void td_sft_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 // キーが離されて動作が終了した時の処理
-void td_sft_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_sft_reset(tap_dance_state_t *state, void *user_data) {
     layer_off(1);
     unregister_code(KC_LSFT);
 }
