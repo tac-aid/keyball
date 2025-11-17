@@ -180,11 +180,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case USER_4:
-      if (record->event.pressed) {
-        register_code(TD(TD_IME));
-      } else {
-        unregister_code(TD(TD_IME));
-      }
+      process_tap_dance_action_keycode(TD(TD_IME), record);
       return false;
     case SCROLL:
       if (record->event.pressed) {
