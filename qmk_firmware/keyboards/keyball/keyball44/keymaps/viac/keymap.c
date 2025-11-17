@@ -182,7 +182,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       process_tap_dance(TD(TD_IME), record);
       return false;
     case USER_5:
-      process_tap_hold_action_keycode(LT(1, KC_LSFT), record);
+      process_tap_hold(LT(1, KC_LSFT), record);
       return false;
     case SCROLL:
       if (record->event.pressed) {
