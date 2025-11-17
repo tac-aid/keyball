@@ -110,19 +110,19 @@ enum {
 void td_ime_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
         layer_on(5);
-        add_mods(MOD_LCTL);
+        register_code(KC_LCTL);
     } else {
-        add_mods(MOD_LGUI);
-        add_mods(MOD_LCTL);
-        add_mods(MOD_LALT);
+        register_code(KC_LCTL);
+        register_code(KC_LALT);
+        register_code(KC_LGUI);
         tap_code(KC_I);
     }
 }
 
 void td_ime_reset(tap_dance_state_t *state, void *user_data) {
-    del_mods(MOD_LGUI);
-    del_mods(MOD_LCTL);
-    del_mods(MOD_LALT);
+    unregister_code(KC_LCTL);
+    unregister_code(KC_LALT);
+    unregister_code(KC_LGUI);
     layer_off(1);
 }
 
