@@ -123,7 +123,7 @@ void td_ime_reset(tap_dance_state_t *state, void *user_data) {
     unregister_code(KC_LCTL);
     unregister_code(KC_LALT);
     unregister_code(KC_LGUI);
-    layer_off(1);
+    layer_off(5);
 }
 
 tap_dance_action_t tap_dance_actions[] = {
@@ -180,7 +180,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case USER_4:
-      return TD(TD_IME);
+      if (record->event.pressed) {
+        register_code(TD(TD_IME));
+      } else {
+        unregister_code(TD(TD_IME));
+      }
+      return false; /
     case SCROLL:
       if (record->event.pressed) {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
