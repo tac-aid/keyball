@@ -78,7 +78,6 @@ void oledkit_render_info_user(void) {
 }
 #endif
 
-#ifdef COMBO_ENABLE
 const uint16_t PROGMEM btn1[] = {KC_T, KC_N, COMBO_END};
 const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
@@ -91,7 +90,8 @@ enum custom_keycodes {
   USER_1,
   USER_2,
   USER_3,
-  SCROLL,
+  USER_4,
+  SCROLL,+
 };
 
 combo_t key_combos[] = {
@@ -102,7 +102,37 @@ combo_t key_combos[] = {
   COMBO(btn5, KC_BTN5),
   COMBO(scroll, SCROLL),
 };
-#endif
+
+enum {
+  TD_IME 
+};
+
+void td_ime_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        layer_on(5);
+        add_mods(MOD_LCTL);
+    } else {
+        add_mods(MOD_LGUI);
+        add_mods(MOD_LCTL);
+        add_mods(MOD_LALT);
+        tap_code(KC_I);
+    }
+}
+
+void td_ime_reset(qk_tap_dance_state_t *state, void *user_data) {
+    del_mods(MOD_LGUI);
+    del_mods(MOD_LCTL);
+    del_mods(MOD_LALT);
+    layer_off(1);
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_IME] = ACTION_TAP_DANCE_FN_ADVANCED(
+        NULL,
+        td_ime_finished,
+        td_ime_reset
+    )
+};
 
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
@@ -149,6 +179,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
       }
       return false;
+    case USER_4:
+      return TD(TD_IME);
     case SCROLL:
       if (record->event.pressed) {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
