@@ -76,13 +76,6 @@ void oledkit_render_info_user(void) {
 }
 #endif
 
-const uint16_t PROGMEM btn1[] = {KC_T, KC_N, COMBO_END};
-const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
-const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
-const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
-const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
-
 enum custom_keycodes {
   USER_0 = SAFE_RANGE, 
   USER_1,
@@ -90,8 +83,17 @@ enum custom_keycodes {
   USER_3,
   USER_4,
   USER_5,
+  USER_6,
   SCROLL,
 };
+
+const uint16_t PROGMEM btn1[] = {KC_T, KC_N, COMBO_END};
+const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
+const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
+const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
+const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM shift[] = {USER_5, USER_6, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(btn1, KC_BTN1),
@@ -100,6 +102,7 @@ combo_t key_combos[] = {
   COMBO(btn4, KC_BTN4),
   COMBO(btn5, KC_BTN5),
   COMBO(scroll, SCROLL),
+  COMBO(shift, KC_LSFT),
 };
 
 enum {
@@ -182,7 +185,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       process_tap_dance(TD(TD_IME), record);
       return false;
     case USER_5:
-      process_tap_hold(LT(1, KC_LSFT), record);
+      if (record->event.pressed) {
+        layer_on(1);
+      } else {
+        layer_off(1);
+      }
+      return false;
+    case USER_6:
+      if (record->event.pressed) {
+        layer_on(2);
+      } else {
+        layer_off(2);
+      }
       return false;
     case SCROLL:
       if (record->event.pressed) {
