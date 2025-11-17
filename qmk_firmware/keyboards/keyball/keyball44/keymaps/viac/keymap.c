@@ -107,7 +107,7 @@ enum {
   TD_IME 
 };
 
-void td_ime_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_ime_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
         layer_on(5);
         add_mods(MOD_LCTL);
@@ -119,14 +119,14 @@ void td_ime_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void td_ime_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_ime_reset(tap_dance_state_t *state, void *user_data) {
     del_mods(MOD_LGUI);
     del_mods(MOD_LCTL);
     del_mods(MOD_LALT);
     layer_off(1);
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_IME] = ACTION_TAP_DANCE_FN_ADVANCED(
         NULL,
         td_ime_finished,
