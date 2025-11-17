@@ -91,7 +91,7 @@ enum custom_keycodes {
   USER_2,
   USER_3,
   USER_4,
-  SCROLL,+
+  SCROLL,
 };
 
 combo_t key_combos[] = {
