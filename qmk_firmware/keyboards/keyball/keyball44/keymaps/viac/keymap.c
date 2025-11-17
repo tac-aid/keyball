@@ -104,7 +104,6 @@ combo_t key_combos[] = {
 
 enum {
   TD_IME,
-  TD_SHIFT,
 };
 
 void td_ime_finished(tap_dance_state_t *state, void *user_data) {
@@ -126,35 +125,11 @@ void td_ime_reset(tap_dance_state_t *state, void *user_data) {
   layer_off(5);
 }
 
-// タップ/ホールドが確定した時の処理
-void td_sft_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    if (state->pressed) {
-      layer_on(1);
-    }
-  } else if (state->count == 2) {
-    if (state->pressed) {
-      register_code(KC_LSFT);
-    }
-  }
-}
-
-// キーが離されて動作が終了した時の処理
-void td_sft_reset(tap_dance_state_t *state, void *user_data) {
-  layer_off(1);
-  unregister_code(KC_LSFT);
-}
-
 tap_dance_action_t tap_dance_actions[] = {
   [TD_IME] = ACTION_TAP_DANCE_FN_ADVANCED(
     NULL,
     td_ime_finished,
     td_ime_reset
-  ),
-  [TD_SHIFT] = ACTION_TAP_DANCE_FN_ADVANCED(
-    NULL,
-    td_sft_finished,
-    td_sft_reset
   )
 };
 
@@ -207,7 +182,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       process_tap_dance(TD(TD_IME), record);
       return false;
     case USER_5:
-      return process_layer_tap(LT(1, KC_LSFT), record);
+      process_tap_hold_action_keycode(LT(1, KC_LSFT), record);
+      return false;
     case SCROLL:
       if (record->event.pressed) {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
