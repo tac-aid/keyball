@@ -1,4 +1,4 @@
-/*
+)(/*
 Copyright 2022 @Yowkees
 Copyright 2022 MURAOKA Taro (aka KoRoN, @kaoriya)
 
@@ -148,7 +148,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         if (ctrl_tab_active) {
           ctrl_tab_active = false;
-          register_code(KC_LCTL);
+          unregister_code(KC_LCTL);
         }
         if (alt_tab_active) {
           tap_code(KC_TAB);
@@ -163,7 +163,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         if (alt_tab_active) {
           alt_tab_active = false;
-          register_code(KC_LALT);
+          unregister_code(KC_LALT);
         }
         if (ctrl_tab_active) {
           tap_code(KC_TAB);
@@ -218,9 +218,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_off(1);
           register_code(KC_LSFT);
         } else {
-          layer_on(1);
+          layer_on(2);
         }
-        layer_on(2);
       } else {
         user6_active = false;
         if (user5_active) {
