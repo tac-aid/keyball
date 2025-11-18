@@ -95,7 +95,6 @@ const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
 const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
-const uint16_t PROGMEM shift[] = {USER_5, USER_6, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(btn1, KC_BTN1),
@@ -104,7 +103,6 @@ combo_t key_combos[] = {
   COMBO(btn4, KC_BTN4),
   COMBO(btn5, KC_BTN5),
   COMBO(scroll, SCROLL),
-  COMBO(shift, KC_LSFT),
 };
 
 enum {
@@ -141,29 +139,37 @@ tap_dance_action_t tap_dance_actions[] = {
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
 static uint8_t scroll_div = 4;
+static bool user5_active = false;
+static bool user6_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case USER_0:
       if (record->event.pressed) {
-        ctrl_tab_active = false;
-        if (!alt_tab_active) {
-          alt_tab_active = true;
-          register_code(KC_LALT);
+        if (ctrl_tab_active) {
+          ctrl_tab_active = false;
+          register_code(KC_LCTL);
+        }
+        if (alt_tab_active) {
           tap_code(KC_TAB);
         } else {
+          alt_tab_active = true;
+          register_code(KC_LALT);
           tap_code(KC_TAB);
         }
       }
       return false;
     case USER_1:
       if (record->event.pressed) {
-        alt_tab_active = false;
-        if (!ctrl_tab_active) {
-          ctrl_tab_active = true;
-          register_code(KC_LCTL);
+        if (alt_tab_active) {
+          alt_tab_active = false;
+          register_code(KC_LALT);
+        }
+        if (ctrl_tab_active) {
           tap_code(KC_TAB);
         } else {
+          ctrl_tab_active = true;
+          register_code(KC_LCTL);
           tap_code(KC_TAB);
         }
       }
@@ -188,16 +194,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case USER_5:
       if (record->event.pressed) {
-        layer_on(1);
+        user5_active = true;
+        if (user6_active) {
+          layer_off(2);
+          register_code(KC_LSFT);
+        } else {
+          layer_on(1);
+        }
       } else {
-        layer_off(1);
+        user5_active = false;
+        if (user6_active) {
+          unregister_code(KC_LSFT);
+          layer_on(2);
+        } else {
+          layer_off(1);
+        }
       }
       return false;
     case USER_6:
       if (record->event.pressed) {
+        user6_active = true;
+        if (user5_active) {
+          layer_off(1);
+          register_code(KC_LSFT);
+        } else {
+          layer_on(1);
+        }
         layer_on(2);
       } else {
-        layer_off(2);
+        user6_active = false;
+        if (user5_active) {
+          layer_on(1);
+          unregister_code(KC_LSFT);
+        } else {
+          layer_off(2);
+        }
       }
       return false;
     case SCROLL:
@@ -214,7 +245,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // Auto enable scroll mode when the highest layer is 3
     keyball_set_scroll_mode(get_highest_layer(state) == 3);
     if (get_highest_layer(state) != 4) {
       if (alt_tab_active) {
