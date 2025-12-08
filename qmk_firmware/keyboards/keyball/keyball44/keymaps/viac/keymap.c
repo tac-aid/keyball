@@ -56,10 +56,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [3] = LAYOUT_universal(
-    KC_NO, KC_NO , KC_NO, KC_NO, KC_NO, KC_NO,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
-    KC_NO, USER_2, KC_NO, KC_NO, KC_NO, KC_NO,                              KC_NO, KC_NO, USER_3, KC_NO, KC_NO, KC_NO,
-    KC_NO, KC_NO , KC_NO, KC_NO, KC_NO, KC_NO,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
-                   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                KC_NO, KC_NO,        KC_NO , KC_NO, KC_NO
+    KC_NO, KC_NO , KC_NO, KC_NO   , KC_NO   , KC_NO   ,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
+    KC_NO, USER_2, KC_NO, SCRL_DVI, CPI_I100, KBC_SAVE,                              KC_NO, KC_NO, USER_3, KC_NO, KC_NO, KC_NO,
+    KC_NO, KC_NO , KC_NO, SCRL_DVD, CPI_D100, KC_NO   ,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
+                   KC_NO, KC_NO   , KC_NO   , KC_NO   , KC_NO,                KC_NO, KC_NO,        KC_NO , KC_NO, KC_NO
   ),
 
   [4] = LAYOUT_universal(
