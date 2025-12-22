@@ -52,19 +52,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_NO  ,KC_F1, KC_F2 , KC_F3 , KC_F4 , KC_NO      ,                              KC_COLN , KC_1 , KC_2 , KC_3 , KC_NO, KC_NO,
     KC_NO  ,KC_F5, KC_F6 , KC_F7 , KC_F8 , KC_NO      ,                              KC_DOT  , KC_4 , KC_5 , KC_6 , KC_NO, KC_NO,
     KC_NO  ,KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_F7),                              KC_SLASH, KC_7 , KC_8 , KC_9 , KC_0 , KC_NO,
-                   KC_NO , KC_NO  ,KC_NO , KC_NO      , KC_NO,                KC_NO, USER_5  ,        KC_NO, KC_NO, KC_NO
+                   KC_NO , KC_NO  ,KC_NO , KC_NO      , KC_NO,                USER_3, USER_5 ,        KC_NO, KC_NO, KC_NO
   ),
 
   [3] = LAYOUT_universal(
     KC_NO, KC_NO , KC_NO, KC_NO   , KC_NO   , KC_NO   ,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
-    KC_NO, USER_2, KC_NO, SCRL_DVI, CPI_I100, KBC_SAVE,                              KC_NO, KC_NO, USER_3, KC_NO, KC_NO, KC_NO,
+    KC_NO, USER_2, KC_NO, SCRL_DVI, CPI_I100, KBC_SAVE,                              KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
     KC_NO, KC_NO , KC_NO, SCRL_DVD, CPI_D100, KC_NO   ,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
                    KC_NO, KC_NO   , KC_NO   , KC_NO   , KC_NO,                KC_NO, KC_NO,        KC_NO , KC_NO, KC_NO
   ),
 
   [4] = LAYOUT_universal(
     KC_NO, KC_NO, KC_NO     , LSFT(KC_TAB), USER_1, KC_NO ,                            KC_NO  , LALT(KC_LEFT), KC_UP  , LALT(KC_RIGHT), KC_NO        , KC_NO,
-    KC_NO, KC_NO, LALT(KC_S), LSFT(KC_TAB), USER_0, KC_NO ,                            KC_PGUP, KC_LEFT      , KC_DOWN, KC_RIGHT      , LCTL(KC_LEFT), LCTL(KC_RIGHT),
+    KC_NO, KC_NO, LALT(KC_S), LSFT(KC_TAB), USER_0, USER_2 ,                           KC_PGUP, KC_LEFT      , KC_DOWN, KC_RIGHT      , LCTL(KC_LEFT), LCTL(KC_RIGHT),
     KC_NO, KC_NO, LALT(KC_X), LALT(KC_C)  , KC_NO , KC_NO ,                            KC_PGDN, LGUI(KC_LEFT), KC_NO  , LGUI(KC_RIGHT), LCTL(KC_UP)  , KC_F11,
                   KC_NO     , KC_NO       ,KC_NO  , KC_NO , KC_NO,            KC_LSFT, KC_NO  ,                KC_NO   , KC_NO        , KC_NO
   ),
@@ -95,6 +95,7 @@ const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
 const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM scroll[] = {KC_D, KC_J, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(btn1, KC_BTN1),
@@ -103,41 +104,12 @@ combo_t key_combos[] = {
   COMBO(btn4, KC_BTN4),
   COMBO(btn5, KC_BTN5),
   COMBO(scroll, SCROLL),
-};
-
-enum {
-  TD_IME,
-};
-
-void td_ime_finished(tap_dance_state_t *state, void *user_data) {
-  if (state->pressed) {
-    layer_on(5);
-    register_code(KC_LCTL);
-  } else {
-    register_code(KC_LCTL);
-    register_code(KC_LALT);
-    register_code(KC_LGUI);
-    tap_code(KC_I);
-  }
-}
-
-void td_ime_reset(tap_dance_state_t *state, void *user_data) {
-  unregister_code(KC_LCTL);
-  unregister_code(KC_LALT);
-  unregister_code(KC_LGUI);
-  layer_off(5);
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-  [TD_IME] = ACTION_TAP_DANCE_FN_ADVANCED(
-    NULL,
-    td_ime_finished,
-    td_ime_reset
-  )
+  COMBO(h_scroll, H_SCROLL),
 };
 
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
+static bool alt_ctrl_tab_active = false;
 static uint8_t scroll_div = 4;
 static bool user5_active = false;
 static bool user6_active = false;
@@ -146,10 +118,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case USER_0:
       if (record->event.pressed) {
-        if (ctrl_tab_active) {
-          ctrl_tab_active = false;
-          unregister_code(KC_LCTL);
-        }
+        ctrl_tab_active = false;
+        alt_ctrl_tab_active = false;
+        unregister_code(KC_LCTL);
         if (alt_tab_active) {
           tap_code(KC_TAB);
         } else {
@@ -161,10 +132,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case USER_1:
       if (record->event.pressed) {
-        if (alt_tab_active) {
-          alt_tab_active = false;
-          unregister_code(KC_LALT);
-        }
+        alt_tab_active = false;
+        alt_ctrl_tab_active = false;
+        unregister_code(KC_LALT);
         if (ctrl_tab_active) {
           tap_code(KC_TAB);
         } else {
@@ -175,22 +145,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case USER_2:
-      if (record->event.pressed) {
-        scroll_div = keyball_get_scroll_div();
-        keyball_set_scroll_div(7);
-      } else {
-        keyball_set_scroll_div(scroll_div);
+      if (record->event.pressed) { 
+        alt_tab_active = false;
+        ctrl_tab_active = false;
+        unregister_code(KC_LALT);
+        if (ctrl_tab_active) {
+          tap_code(KC_TAB);
+        } else {
+          ctrl_tab_active = true;
+          register_code(KC_LCTL);
+          register_code(KC_LALT);
+          tap_code(KC_TAB);
+        }
       }
       return false;
     case USER_3:
       if (record->event.pressed) {
-        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HORIZONTAL);
+        if (user6_active) {
+          register_code(KC_LCTL);
+          register_code(KC_LALT);
+        }
       } else {
-        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+        if (user6_active) {
+          unregister_code(KC_LCTL);
+          unregister_code(KC_LALT);
+        }
       }
-      return false;
-    case USER_4:
-      process_tap_dance(TD(TD_IME), record);
       return false;
     case USER_5:
       if (record->event.pressed) {
@@ -233,6 +213,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SCROLL:
       if (record->event.pressed) {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+        layer_on(3);
+      } else {
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+        layer_off(3);
+      }
+      return false;
+    case H_SCROLL:
+      if (record->event.pressed) {
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HRIZONTAL);
         layer_on(3);
       } else {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
