@@ -29,6 +29,7 @@ enum custom_keycodes {
   USER_5,
   USER_6,
   SCROLL,
+  H_SCROLL,
 };
 
 // clang-format off
@@ -44,11 +45,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [1] = LAYOUT_universal(
     KC_NO  ,  KC_ASTR, KC_SLSH, KC_GRV         , KC_DLR , KC_COMM,                       KC_DOT  , KC_LBRC, KC_RBRC, KC_EXLM, KC_QUES, KC_NO,
     KC_LCTL,  KC_PLUS, KC_MINS, KC_DOUBLE_QUOTE, KC_EQL , KC_PERC,                       KC_AT   , KC_LPRN, KC_RPRN, KC_LABK, KC_RABK, KC_NO,
-    KC_NO  ,  KC_CIRC, KC_TILD, KC_QUOT        , KC_UNDS, KC_BSLS,                       KKC_HASH, KC_LCBR, KC_RCBR, KC_AMPR, KC_PIPE, KC_NO,
-                       KC_NO  , KC_LALT ,        KC_GUI  ,USER_6 , KC_SPC,        KC_NO, KC_NO,             KC_NO  , KC_NO  , KC_NO
+    KC_NO  ,  KC_CIRC, KC_TILD, KC_QUOT        , KC_UNDS, KC_BSLS,                       KC_HASH, KC_LCBR, KC_RCBR, KC_AMPR, KC_PIPE, KC_NO,
+                      KC_NO  , KC_LALT ,        KC_LGUI  ,USER_6 , KC_SPC,        KC_NO, KC_NO,             KC_NO  , KC_NO  , KC_NO
   ),
 
-  [2] = LAYOUT_universal(2
+  [2] = LAYOUT_universal(
     KC_NO  ,KC_F1, KC_F2 , KC_F3 , KC_F4 , KC_NO      ,                              KC_COLN , KC_1 , KC_2 , KC_3 , KC_NO, KC_NO,
     KC_NO  ,KC_F5, KC_F6 , KC_F7 , KC_F8 , KC_NO      ,                              KC_DOT  , KC_4 , KC_5 , KC_6 , KC_NO, KC_NO,
     KC_NO  ,KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_F7),                              KC_SLASH, KC_7 , KC_8 , KC_9 , KC_0 , KC_NO,
@@ -95,7 +96,7 @@ const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
 const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
-const uint16_t PROGMEM scroll[] = {KC_D, KC_J, COMBO_END};
+const uint16_t PROGMEM h_scroll[] = {KC_D, KC_J, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(btn1, KC_BTN1),
@@ -221,7 +222,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case H_SCROLL:
       if (record->event.pressed) {
-        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HRIZONTAL);
+        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HORIZONTAL);
         layer_on(3);
       } else {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
