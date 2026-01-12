@@ -111,7 +111,6 @@ combo_t key_combos[] = {
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
 static bool alt_ctrl_tab_active = false;
-static uint8_t scroll_div = 4;
 static bool user5_active = false;
 static bool user6_active = false;
 
