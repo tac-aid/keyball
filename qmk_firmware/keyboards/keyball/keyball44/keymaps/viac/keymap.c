@@ -21,15 +21,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 
 enum custom_keycodes {
+  // aption + tab
   USER_0 = SAFE_RANGE, 
+  // ctrl + tab
   USER_1,
   USER_2,
   USER_3,
+  // horizontal scroll
   USER_4,
+  // numeric
   USER_5,
+  // symbolic
   USER_6,
-  SCROLL,
-  H_SCROLL,
+  // SCROLL,
+  // H_SCROLL,
 };
 
 // clang-format off
@@ -37,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
   [0] = LAYOUT_universal(
     KC_TAB         , KC_Q   , KC_L   , KC_U           , KC_SCLN        , KC_COLN,                                             KC_F  , KC_W , KC_R , KC_Y , KC_P      , KC_BSPC     ,
-    LM(5, MOD_LCTL), KC_E   , KC_I   , KC_A           , KC_O           , KC_COMM,                                             KC_K  , KC_T , KC_N , KC_S , KC_H      , KC_ESC      ,
+    LM(5, MOD_LCTL), KC_E   , KC_I   , KC_A           , KC_O           , KC_COMM,                                             KC_K  , KC_T , KC_N , KC_S , KC_H      , LT(3, KC_ESC),
     KC_LSFT        , KC_Z   , KC_X   , KC_C           , KC_V           , KC_DOT ,                                             KC_G  , KC_D , KC_M , KC_J , KC_B      , LGUI(KC_SPC),
                               KC_LALT, LM(5, MOD_LALT), LM(5, MOD_LGUI), USER_6 , LT(4, KC_SPC),              LSFT_T(KC_ENT), USER_5,        KC_NO, KC_NO, HYPR(KC_S)
   ),
@@ -58,16 +63,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_universal(
     KC_NO, KC_NO , KC_NO, KC_NO   , KC_NO   , KC_NO   ,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
-    KC_NO, USER_2, KC_NO, SCRL_DVI, CPI_I100, KBC_SAVE,                              KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+    KC_NO, USER_2, KC_NO, SCRL_DVI, CPI_I100, KBC_SAVE,                              KC_NO, KC_NO, KC_NO, KC_NO, USER_4, KC_NO,
     KC_NO, KC_NO , KC_NO, SCRL_DVD, CPI_D100, KC_NO   ,                              KC_NO, KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
                    KC_NO, KC_NO   , KC_NO   , KC_NO   , KC_NO,                KC_NO, KC_NO,        KC_NO , KC_NO, KC_NO
   ),
 
   [4] = LAYOUT_universal(
     KC_NO, KC_NO, KC_NO     , LSFT(KC_TAB), USER_1, KC_NO ,                            KC_NO  , LALT(KC_LEFT), KC_UP  , LALT(KC_RIGHT), KC_NO        , KC_NO,
-    KC_NO, KC_NO, LALT(KC_S), LSFT(KC_TAB), USER_0, USER_2 ,                           KC_PGUP, KC_LEFT      , KC_DOWN, KC_RIGHT      , LCTL(KC_LEFT), LCTL(KC_RIGHT),
+    KC_NO, KC_NO, LALT(KC_S), LSFT(KC_TAB), USER_0, KC_Q  ,                            KC_PGUP, KC_LEFT      , KC_DOWN, KC_RIGHT      , LCTL(KC_LEFT), LCTL(KC_RIGHT),
     KC_NO, KC_NO, LALT(KC_X), LALT(KC_C)  , KC_NO , KC_NO ,                            KC_PGDN, LGUI(KC_LEFT), KC_NO  , LGUI(KC_RIGHT), LCTL(KC_UP)  , KC_F11,
-                  KC_NO     , KC_NO       ,KC_NO  , KC_NO , KC_NO,            KC_LSFT, KC_NO  ,                KC_NO   , KC_NO        , KC_NO
+                  KC_NO     , KC_NO       ,KC_NO  , KC_NO , KC_NO,            KC_LSFT, KC_LGUI,                KC_NO   , KC_NO        , KC_NO
   ),
 
   [5] = LAYOUT_universal(
@@ -75,7 +80,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL, KC_A, KC_S , KC_D   , KC_F   , KC_G   ,                                  KC_H   , KC_J, KC_K   , KC_L  , KC_SCLN, KC_NO  ,
     KC_LSFT, KC_Z, KC_X , KC_C   , KC_V   , KC_B   ,                                  KC_N   , KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_NO  ,
                    KC_NO, KC_LALT, KC_LGUI, KC_LNG1, KC_SPC,                  KC_ENT, KC_LNG1,       KC_NO  , KC_NO , KC_NO
+  ),
+
+  [6] = LAYOUT_universal(
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_BTN3, KC_BTN2, KC_BTN1, KC_TRNS,                               KC_TRNS, KC_BTN1, KC_BTN2, KC_BTN3, KC_TRNS, KC_TRNS,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN5, KC_BTN4, KC_TRNS,                               KC_TRNS, KC_BTN4, KC_BTN5, KC_TRNS, KC_TRNS, KC_TRNS,
+                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,              KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
   )
+
 };
 // clang-format on
 
@@ -90,29 +103,29 @@ void oledkit_render_info_user(void) {
 }
 #endif
 
-const uint16_t PROGMEM btn1[] = {KC_T, KC_N, COMBO_END};
-const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
-const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
-const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
-const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
-const uint16_t PROGMEM h_scroll[] = {KC_D, KC_J, COMBO_END};
+// const uint16_t PROGMEM btn1[] = {KC_T, KC_N, COMBO_END};
+// const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
+// const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
+// const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
+// const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
+// const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
+// const uint16_t PROGMEM h_scroll[] = {KC_D, KC_J, COMBO_END};
 
 combo_t key_combos[] = {
-  COMBO(btn1, KC_BTN1),
-  COMBO(btn1_2, KC_BTN1),
-  COMBO(btn2, KC_BTN2),
-  COMBO(btn4, KC_BTN4),
-  COMBO(btn5, KC_BTN5),
-  COMBO(scroll, SCROLL),
-  COMBO(h_scroll, H_SCROLL),
+  // COMBO(btn1, KC_BTN1),
+  // COMBO(btn1_2, KC_BTN1),
+  // COMBO(btn2, KC_BTN2),
+  // COMBO(btn4, KC_BTN4),
+  // COMBO(btn5, KC_BTN5),
+  // COMBO(scroll, SCROLL),
+  // COMBO(h_scroll, H_SCROLL),
 };
 
 static bool alt_tab_active = false;
 static bool ctrl_tab_active = false;
 static bool alt_ctrl_tab_active = false;
-static bool user5_active = false;
-static bool user6_active = false;
+static bool symbolic_active = false;
+static bool numeric_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -161,12 +174,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case USER_3:
       if (record->event.pressed) {
-        if (user6_active) {
+        if (numeric_active) {
           register_code(KC_LCTL);
           register_code(KC_LALT);
         }
       } else {
-        if (user6_active) {
+        if (numeric_active) {
           unregister_code(KC_LCTL);
           unregister_code(KC_LALT);
         }
@@ -174,16 +187,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case USER_5:
       if (record->event.pressed) {
-        user5_active = true;
-        if (user6_active) {
+        symbolic_active = true;
+        if (numeric_active) {
           layer_off(2);
           register_code(KC_LSFT);
         } else {
           layer_on(1);
         }
       } else {
-        user5_active = false;
-        if (user6_active) {
+        symbolic_active = false;
+        if (numeric_active) {
           unregister_code(KC_LSFT);
           layer_on(2);
         } else {
@@ -193,16 +206,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case USER_6:
       if (record->event.pressed) {
-        user6_active = true;
-        if (user5_active) {
+        numeric_active = true;
+        if (symbolic_active) {
           layer_off(1);
           register_code(KC_LSFT);
         } else {
           layer_on(2);
         }
       } else {
-        user6_active = false;
-        if (user5_active) {
+        numeric_active = false;
+        if (symbolic_active) {
           layer_on(1);
           unregister_code(KC_LSFT);
         } else {
@@ -210,22 +223,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-    case SCROLL:
-      if (record->event.pressed) {
-        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
-        layer_on(3);
-      } else {
-        keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
-        layer_off(3);
-      }
-      return false;
-    case H_SCROLL:
+    // case SCROLL:
+    //   if (record->event.pressed) {
+    //     keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+    //     layer_on(3);
+    //   } else {
+    //     keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+    //     layer_off(3);
+    //   }
+    //   return false;
+    case USER_4:
       if (record->event.pressed) {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HORIZONTAL);
-        layer_on(3);
       } else {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
-        layer_off(3);
       }
       return false;
   }
