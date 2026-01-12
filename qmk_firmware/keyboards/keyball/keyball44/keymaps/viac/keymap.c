@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     KC_TAB         , KC_Q   , KC_L   , KC_U           , KC_SCLN        , KC_COLN,                                             KC_F  , KC_W , KC_R , KC_Y , KC_P      , KC_BSPC     ,
     LM(5, MOD_LCTL), KC_E   , KC_I   , KC_A           , KC_O           , KC_COMM,                                             KC_K  , KC_T , KC_N , KC_S , KC_H      , LT(3, KC_ESC),
-    KC_LSFT        , KC_Z   , KC_X   , KC_C           , KC_V           , KC_DOT ,                                             KC_G  , KC_D , KC_M , KC_J , KC_B      , LT(6, KC_F20),
+    KC_LSFT        , KC_Z   , KC_X   , KC_C           , KC_V           , KC_DOT ,                                             KC_G  , KC_D , KC_M , KC_J , KC_B      , LT(6, LGUI(KC_SPC)),
                               KC_LALT, LM(5, MOD_LALT), LM(5, MOD_LGUI), USER_6 , LT(4, KC_SPC),              LSFT_T(KC_ENT), USER_5,        KC_NO, KC_NO, HYPR(KC_S)
   ),
 
@@ -238,13 +238,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
       }
-      }
       return false;
-    case KC_F20:
-        if (record->event.pressed) {
-            tap_code16(LGUI(KC_SPC));
-        }
-        return false;
   }
   return true;
 }
