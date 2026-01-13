@@ -37,9 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 180
 #define PERMISSIVE_HOLD
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#define AUTO_MOUSE_DEFAULT_LAYER 6
+#define AUTO_MOUSE_DEFAULT_LAYER 1
 #define AUTO_MOUSE_TIME 650
 #define COMBO_TERM 40
 #define DYNAMIC_KEYMAP_LAYER_COUNT 7
-#define KEYBALL_CPI_DEFAULT 700
+#define KEYBALL_CPI_DEFAULT 900
 #define KEYBALL_SCROLL_DIV_DEFAULT 5
