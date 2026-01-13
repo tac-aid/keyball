@@ -42,9 +42,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
   [0] = LAYOUT_universal(
     KC_TAB         , KC_Q   , KC_L   , KC_U           , KC_SCLN        , KC_COLN,                                             KC_F  , KC_W , KC_R , KC_Y , KC_P      , KC_BSPC     ,
-    LM(5, MOD_LCTL), KC_E   , KC_I   , KC_A           , KC_O           , KC_COMM,                                             KC_K  , KC_T , KC_N , KC_S , KC_H      , LT(3, KC_ESC),
-    KC_LSFT        , KC_Z   , KC_X   , KC_C           , KC_V           , KC_DOT ,                                             KC_G  , KC_D , KC_M , KC_J , KC_B      , LT(5, LGUI(KC_SPC)),
-                              KC_LALT, LM(5, MOD_LALT), LM(5, MOD_LGUI), USER_6 , LT(4, KC_SPC),              LSFT_T(KC_ENT), USER_5,        KC_NO, KC_NO, HYPR(KC_S)
+    LM(6, MOD_LCTL), KC_E   , KC_I   , KC_A           , KC_O           , KC_COMM,                                             KC_K  , KC_T , KC_N , KC_S , KC_H      , LT(5, KC_ESC),
+    KC_LSFT        , KC_Z   , KC_X   , KC_C           , KC_V           , KC_DOT ,                                             KC_G  , KC_D , KC_M , KC_J , KC_B      , LT(1, LGUI(KC_SPC)),
+                              KC_LALT, LM(6, MOD_LALT), LM(6, MOD_LGUI), USER_6 , LT(4, KC_SPC),              LSFT_T(KC_ENT), USER_5,        KC_NO, KC_NO, HYPR(KC_S)
   ),
 
   [1] = LAYOUT_universal(
