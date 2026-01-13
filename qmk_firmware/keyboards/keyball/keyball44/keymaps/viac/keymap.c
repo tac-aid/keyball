@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     KC_TAB         , KC_Q   , KC_L   , KC_U           , KC_SCLN        , KC_COLN,                                             KC_F  , KC_W , KC_R , KC_Y , KC_P      , KC_BSPC     ,
     LM(6, MOD_LCTL), KC_E   , KC_I   , KC_A           , KC_O           , KC_COMM,                                             KC_K  , KC_T , KC_N , KC_S , KC_H      , LT(5, KC_ESC),
-    KC_LSFT        , KC_Z   , KC_X   , KC_C           , KC_V           , KC_DOT ,                                             KC_G  , KC_D , KC_M , KC_J , KC_B      , LT(1, LGUI(KC_SPC)),
+    KC_LSFT        , KC_Z   , KC_X   , KC_C           , KC_V           , KC_DOT ,                                             KC_G  , KC_D , KC_M , KC_J , KC_B      , LGUI(KC_SPC),
                               KC_LALT, LM(6, MOD_LALT), LM(6, MOD_LGUI), USER_6 , LT(4, KC_SPC),              LSFT_T(KC_ENT), USER_5,        KC_NO, KC_NO, HYPR(KC_S)
   ),
 
@@ -103,20 +103,20 @@ void oledkit_render_info_user(void) {
 }
 #endif
 
-// const uint16_t PROGMEM btn1[] = {KC_T, KC_N, COMBO_END};
-// const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
-// const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
-// const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
-// const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
+const uint16_t PROGMEM btn1[] = {KC_T, KC_N, COMBO_END};
+const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
+const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
+const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
 // const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
 // const uint16_t PROGMEM h_scroll[] = {KC_D, KC_J, COMBO_END};
 
 combo_t key_combos[] = {
-  // COMBO(btn1, KC_BTN1),
-  // COMBO(btn1_2, KC_BTN1),
-  // COMBO(btn2, KC_BTN2),
-  // COMBO(btn4, KC_BTN4),
-  // COMBO(btn5, KC_BTN5),
+  COMBO(btn1, KC_BTN1),
+  COMBO(btn1_2, KC_BTN1),
+  COMBO(btn2, KC_BTN2),
+  COMBO(btn4, KC_BTN4),
+  COMBO(btn5, KC_BTN5),
   // COMBO(scroll, SCROLL),
   // COMBO(h_scroll, H_SCROLL),
 };
