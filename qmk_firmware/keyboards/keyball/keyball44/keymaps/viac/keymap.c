@@ -108,7 +108,7 @@ const uint16_t PROGMEM btn1_2[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM btn2[] = {KC_N, KC_S, COMBO_END};
 const uint16_t PROGMEM btn4[] = {KC_D, KC_M, COMBO_END};
 const uint16_t PROGMEM btn5[] = {KC_M, KC_J, COMBO_END};
-// const uint16_t PROGMEM scroll[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM scroll[] = {KC_D, KC_N, COMBO_END};
 // const uint16_t PROGMEM h_scroll[] = {KC_D, KC_J, COMBO_END};
 
 combo_t key_combos[] = {
@@ -117,7 +117,7 @@ combo_t key_combos[] = {
   COMBO(btn2, KC_BTN2),
   COMBO(btn4, KC_BTN4),
   COMBO(btn5, KC_BTN5),
-  // COMBO(scroll, SCROLL),
+  COMBO(scroll, MO(5)),
   // COMBO(h_scroll, H_SCROLL),
 };
 
